@@ -31,4 +31,9 @@ public class FileAsserterTest {
         ).getMessage();
         assertTrue(message.endsWith("expected: <This is the correct text.> but was: <This text is not correct.>"));
     }
+
+    @Test
+    void testAssertMultilineFile(TestInfo info) {
+        textAsserter.assertTestFile("Line 1\nLine 2", info);
+    }
 }
