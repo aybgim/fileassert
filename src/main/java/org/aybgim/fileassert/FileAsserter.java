@@ -1,5 +1,6 @@
 package org.aybgim.fileassert;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
 import java.io.BufferedReader;
@@ -7,16 +8,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileAsserter {
 
     private final String fileExtension;
+    private final BiConsumer<String, String> assertion;
 
     public FileAsserter(String fileExtension) {
+        this(fileExtension, Assertions::assertEquals);
+    }
+
+    public FileAsserter(String fileExtension, BiConsumer<String, String> assertion) {
         this.fileExtension = fileExtension;
+        this.assertion = assertion;
     }
 
     void assertTestFile(String actual, TestInfo info) {
@@ -32,6 +38,6 @@ public class FileAsserter {
         String expected = new BufferedReader(in)
                 .lines()
                 .collect(Collectors.joining("\n"));
-        assertEquals(expected, actual);
+        assertion.accept(expected, actual);
     }
 }

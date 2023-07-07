@@ -3,6 +3,8 @@ package org.aybgim.fileassert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
+import java.util.function.BiConsumer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileAsserterTest {
@@ -35,5 +37,15 @@ public class FileAsserterTest {
     @Test
     void testAssertMultilineFile(TestInfo info) {
         textAsserter.assertTestFile("Line 1\nLine 2", info);
+    }
+
+    @Test
+    void testAssertTextIgnoringSpace(TestInfo info) {
+        BiConsumer<String, String> assertion = (expected, actual) -> assertEquals(
+                expected.replaceAll("\\s+", ""),
+                actual.replaceAll("\\s+", "")
+        );
+        FileAsserter spaceIgnoringAsserter = new FileAsserter("txt", assertion);
+        spaceIgnoringAsserter.assertTestFile("Ignore The Spaces", info);
     }
 }
