@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation platform('org.junit:junit-bom:5.9.1')
     implementation 'org.junit.jupiter:junit-jupiter'
+    implementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.1'
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
 }
 
