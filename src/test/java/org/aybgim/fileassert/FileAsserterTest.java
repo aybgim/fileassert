@@ -1,10 +1,13 @@
 package org.aybgim.fileassert;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
 import java.util.function.BiConsumer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToCompressingWhiteSpace;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileAsserterTest {
@@ -41,11 +44,8 @@ public class FileAsserterTest {
 
     @Test
     void testAssertTextIgnoringSpace(TestInfo info) {
-        BiConsumer<String, String> assertion = (expected, actual) -> assertEquals(
-                expected.replaceAll("\\s+", ""),
-                actual.replaceAll("\\s+", "")
-        );
-        FileAsserter spaceIgnoringAsserter = new FileAsserter("txt", assertion);
+        FileAsserter spaceIgnoringAsserter = new FileAsserter("txt",
+                (expected, actual) -> assertThat(actual, equalToCompressingWhiteSpace(expected)));
         spaceIgnoringAsserter.assertTestFile("Ignore The Spaces", info);
     }
 }
