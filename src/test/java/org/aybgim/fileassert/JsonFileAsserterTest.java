@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JsonFileAsserterTest {
 
-    private final FileAsserter jsonAsserter = new JsonFileAsserter();
+    private final FileAsserter jsonAsserter = FileAsserters.jsonFileAsserter();
 
     @Test
     void testAssertJsonFile(TestInfo info) throws Exception {

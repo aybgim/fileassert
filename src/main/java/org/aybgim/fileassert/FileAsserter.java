@@ -1,6 +1,5 @@
 package org.aybgim.fileassert;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
 import java.io.IOException;
@@ -19,10 +18,6 @@ public class FileAsserter {
 
     private final String fileExtension;
     private final TextAssertion assertion;
-
-    public FileAsserter(String fileExtension) {
-        this(fileExtension, Assertions::assertEquals);
-    }
 
     public FileAsserter(String fileExtension, TextAssertion assertion) {
         this.fileExtension = fileExtension;

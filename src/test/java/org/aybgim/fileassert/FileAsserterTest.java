@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileAsserterTest {
 
-    private final FileAsserter textAsserter = new FileAsserter("txt");
+    private final FileAsserter textAsserter = FileAsserters.fileAsserter("txt");
 
     @Test
     void testAssertNonExistentFile(TestInfo info) {
@@ -41,8 +41,9 @@ public class FileAsserterTest {
 
     @Test
     void testAssertTextIgnoringSpace(TestInfo info) throws Exception {
-        FileAsserter spaceIgnoringAsserter = new FileAsserter("txt",
-                (expected, actual) -> assertThat(actual, equalToCompressingWhiteSpace(expected)));
+        String fileExtension = "txt";
+        TextAssertion textAssertion = (expected, actual) -> assertThat(actual, equalToCompressingWhiteSpace(expected));
+        FileAsserter spaceIgnoringAsserter = FileAsserters.fileAsserter(fileExtension, textAssertion);
         spaceIgnoringAsserter.assertTestFile("Ignore The Spaces", info);
     }
 }
