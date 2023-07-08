@@ -16,6 +16,8 @@ public class FileAsserters {
     }
 
     public static FileAsserter fileAsserter(String fileExtension, TextAssertion textAssertion) {
-        return new FileAsserter(fileExtension, textAssertion);
+        return Boolean.getBoolean("generate")
+                ? new WritingFileAsserter(fileExtension)
+                : new TestingFileAsserter(fileExtension, textAssertion);
     }
 }
