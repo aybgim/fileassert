@@ -10,6 +10,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToCompressingWhiteSpace;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JsonFileAssertTest {
@@ -37,10 +39,11 @@ public class JsonFileAssertTest {
 
     @Test
     void testAssertIncorrectJsonFile(TestInfo info) {
-        Map<String, String> map = singletonMap("k1", "v1");
-        assertThrows(
+        Map<String, String> map = singletonMap("key", "thatValue");
+        String message = assertThrows(
                 AssertionError.class,
                 () -> jsonFileAssert.assertWithFile(map, info)
-        );
+        ).getMessage();
+        assertThat(message, equalToCompressingWhiteSpace("key Expected: thisValue got: thatValue"));
     }
 }
