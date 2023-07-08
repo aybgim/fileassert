@@ -17,7 +17,7 @@ public class FileAsserterTest {
                 NullPointerException.class,
                 () -> textAsserter.assertTestFile("No such file", info)
         ).getMessage();
-        assertEquals("Cannot read file FileAsserterTest.testAssertNonExistentFile.txt", message);
+        assertEquals("Cannot read file FileAsserterTest/testAssertNonExistentFile.txt", message);
     }
 
     @Test

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +32,7 @@ public class FileAsserter {
         String testName = info.getTestMethod()
                 .orElseThrow()
                 .getName();
-        String fileName = testClass.getSimpleName() + "." + testName + "." + fileExtension;
+        String fileName = testClass.getSimpleName() + "/" + testName + "." + fileExtension;
         InputStream inputStream = testClass.getResourceAsStream(fileName);
         Objects.requireNonNull(inputStream, () -> "Cannot read file " + fileName);
         InputStreamReader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
