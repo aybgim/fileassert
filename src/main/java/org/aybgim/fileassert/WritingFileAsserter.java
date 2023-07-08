@@ -14,12 +14,13 @@ public class WritingFileAsserter extends FileAsserter {
     }
     @Override
     protected void assertTestFile(String actual, Class<?> testClass, String testFileName) throws Exception {
-        String[] path = Stream.of(
+        String[] resourceDirPath = Stream.concat(
                 Stream.of("test", "resources"),
-                Stream.of(testClass.getCanonicalName().split("\\.")),
-                Stream.of(testFileName)
-        ).flatMap(Function.identity()).toArray(String[]::new);
-        Path srcPath = Paths.get("src", path);
-        Files.writeString(srcPath, actual, StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+                Stream.of(testClass.getCanonicalName().split("\\."))
+        ).toArray(String[]::new);
+        Path srcDirPath = Paths.get("src", resourceDirPath);
+        Files.createDirectories(srcDirPath);
+        Path testFilePath = srcDirPath.resolve(testFileName);
+        Files.writeString(testFilePath, actual, StandardCharsets.UTF_8);
     }
 }
