@@ -3,12 +3,17 @@ package org.aybgim.fileassert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileAsserter {
 
@@ -30,13 +35,32 @@ public class FileAsserter {
         String testName = info.getTestMethod()
                 .orElseThrow()
                 .getName();
-        String fileName = testClass.getSimpleName() + "/" + testName + "." + fileExtension;
-        InputStream inputStream = testClass.getResourceAsStream(fileName);
-        Objects.requireNonNull(inputStream, () -> "Cannot read file " + fileName);
-        InputStreamReader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        String expected = new BufferedReader(in)
-                .lines()
-                .collect(Collectors.joining("\n"));
-        assertion.assertText(expected, actual);
+        String testFileName = testName + "." + fileExtension;
+        if (Boolean.getBoolean("generate")) {
+            writeTestFile(actual, testClass, testFileName);
+        } else {
+            assertTestFile(actual, testClass, testFileName);
+        }
+    }
+    private static void writeTestFile(String actual, Class<?> testClass, String testFileName) throws IOException {
+        String[] path = Stream.of(
+                Stream.of("test", "resources"),
+                Stream.of(testClass.getCanonicalName().split("\\.")),
+                Stream.of(testFileName)
+        ).flatMap(Function.identity()).toArray(String[]::new);
+        Path srcPath = Paths.get("src", path);
+        Files.writeString(srcPath, actual, StandardCharsets.UTF_8, StandardOpenOption.WRITE);
+    }
+
+    private void assertTestFile(String actual, Class<?> testClass, String testFileName) throws Exception {
+        String fileName = testClass.getSimpleName() + "/" + testFileName;
+        URL resource = testClass.getResource(fileName);
+        Objects.requireNonNull(resource, () -> "Cannot read file " + fileName);
+        Path path = Paths.get(resource.toURI());
+        try(Stream<String> lines = Files.lines(path)) {
+            String expected = lines
+                    .collect(Collectors.joining("\n"));
+            assertion.assertText(expected, actual);
+        }
     }
 }
