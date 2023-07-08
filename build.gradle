@@ -41,4 +41,16 @@ publishing {
             from components.java
         }
     }
+    repositories {
+        maven {
+            url "https://gitlab.com/aybgim/api/v4/projects/fileassert/packages/maven"
+            credentials(HttpHeaderCredentials) {
+                name = "aybgim"
+                value = gitLabPrivateToken // the variable resides in $GRADLE_USER_HOME/gradle.properties
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
 }
