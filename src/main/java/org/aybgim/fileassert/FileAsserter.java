@@ -4,29 +4,27 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class FileAsserter {
 
     private final String fileExtension;
-    private final BiConsumer<String, String> assertion;
+    private final TextAssertion assertion;
 
     public FileAsserter(String fileExtension) {
         this(fileExtension, Assertions::assertEquals);
     }
 
-    public FileAsserter(String fileExtension, BiConsumer<String, String> assertion) {
+    public FileAsserter(String fileExtension, TextAssertion assertion) {
         this.fileExtension = fileExtension;
         this.assertion = assertion;
     }
 
-    void assertTestFile(String actual, TestInfo info) {
+    void assertTestFile(String actual, TestInfo info) throws Exception {
         Class<?> testClass = info.getTestClass()
                 .orElseThrow();
         String testName = info.getTestMethod()
@@ -39,6 +37,6 @@ public class FileAsserter {
         String expected = new BufferedReader(in)
                 .lines()
                 .collect(Collectors.joining("\n"));
-        assertion.accept(expected, actual);
+        assertion.assertText(expected, actual);
     }
 }

@@ -21,7 +21,7 @@ public class FileAsserterTest {
     }
 
     @Test
-    void testAssertTextFile(TestInfo info) {
+    void testAssertTextFile(TestInfo info) throws Exception {
         textAsserter.assertTestFile("This is text", info);
     }
 
@@ -35,12 +35,12 @@ public class FileAsserterTest {
     }
 
     @Test
-    void testAssertMultilineFile(TestInfo info) {
+    void testAssertMultilineFile(TestInfo info) throws Exception {
         textAsserter.assertTestFile("Line 1\nLine 2", info);
     }
 
     @Test
-    void testAssertTextIgnoringSpace(TestInfo info) {
+    void testAssertTextIgnoringSpace(TestInfo info) throws Exception {
         FileAsserter spaceIgnoringAsserter = new FileAsserter("txt",
                 (expected, actual) -> assertThat(actual, equalToCompressingWhiteSpace(expected)));
         spaceIgnoringAsserter.assertTestFile("Ignore The Spaces", info);
