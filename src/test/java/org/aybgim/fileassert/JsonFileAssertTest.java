@@ -12,10 +12,10 @@ import java.util.Map;
 import static java.util.Collections.singletonMap;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JsonFileAsserterTest {
+public class JsonFileAssertTest {
 
     private final Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
-    private final FileAsserter jsonAsserter = FileAsserters.fileAsserter(
+    private final FileAssert jsonFileAssert = FileAsserts.fileAssert(
             "json",
             (expected, actual) -> JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT),
             gson::toJson
@@ -24,14 +24,14 @@ public class JsonFileAsserterTest {
     @Test
     void testAssertJsonFile(TestInfo info) throws Exception {
         Map<String, String> map = singletonMap("text", "This is text");
-        jsonAsserter.assertTestFile(map, info);
+        jsonFileAssert.assertWithFile(map, info);
     }
     @Test
     void testAssertInvalidJsonFile(TestInfo info) {
         Map<String, String> map = singletonMap("text", "This should be valid JSON");
         assertThrows(
                 JSONException.class,
-                () -> jsonAsserter.assertTestFile(map, info)
+                () -> jsonFileAssert.assertWithFile(map, info)
         );
     }
 
@@ -40,7 +40,7 @@ public class JsonFileAsserterTest {
         Map<String, String> map = singletonMap("k1", "v1");
         assertThrows(
                 AssertionError.class,
-                () -> jsonAsserter.assertTestFile(map, info)
+                () -> jsonFileAssert.assertWithFile(map, info)
         );
     }
 }
