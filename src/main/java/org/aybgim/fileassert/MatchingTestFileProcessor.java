@@ -5,20 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 
-class TestingFileAsserter extends FileAsserter {
+class MatchingTestFileProcessor extends TestFileProcessor {
     private final TextAssertion textAssertion;
 
-    TestingFileAsserter(String fileExtension, Function<Object, String> stringRepresentation, TextAssertion textAssertion) {
-        super(fileExtension, stringRepresentation);
+    MatchingTestFileProcessor(TextAssertion textAssertion) {
         this.textAssertion = textAssertion;
     }
-
-    protected void assertTestFile(String text, Class<?> testClass, String testFileName) throws Exception {
+    @Override
+    protected void processTestFile(String text, Class<?> testClass, String testFileName) throws Exception {
         String filePath = testClass.getSimpleName() + "/" + testFileName;
         URL resource = testClass.getResource(filePath);
         Objects.requireNonNull(resource, () -> "Cannot read file " + filePath);

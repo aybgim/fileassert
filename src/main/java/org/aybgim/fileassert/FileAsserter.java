@@ -4,13 +4,15 @@ import org.junit.jupiter.api.TestInfo;
 
 import java.util.function.Function;
 
-public abstract class FileAsserter {
+public class FileAsserter {
     private final String fileExtension;
     private final Function<Object, String> stringRepresentation;
+    private final TestFileProcessor fileProcessor;
 
-    protected FileAsserter(String fileExtension, Function<Object, String> stringRepresentation) {
+    protected FileAsserter(String fileExtension, Function<Object, String> stringRepresentation, TestFileProcessor fileProcessor) {
         this.fileExtension = fileExtension;
         this.stringRepresentation = stringRepresentation;
+        this.fileProcessor = fileProcessor;
     }
     public void assertTestFile(Object actual, TestInfo info) throws Exception {
         Class<?> testClass = info.getTestClass()
@@ -20,8 +22,6 @@ public abstract class FileAsserter {
                 .getName();
         String testFileName = testName + "." + fileExtension;
         String text = stringRepresentation.apply(actual);
-        assertTestFile(text, testClass, testFileName);
+        fileProcessor.processTestFile(text, testClass, testFileName);
     }
-
-    protected abstract void assertTestFile(String text, Class<?> testClass, String testFileName) throws Exception;
 }

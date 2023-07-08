@@ -4,16 +4,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
-class WritingFileAsserter extends FileAsserter {
-
-    WritingFileAsserter(String fileExtension, Function<Object, String> stringRepresentation) {
-        super(fileExtension, stringRepresentation);
-    }
+class WritingTestFileProcessor extends TestFileProcessor {
     @Override
-    protected void assertTestFile(String text, Class<?> testClass, String testFileName) throws Exception {
+    protected void processTestFile(String text, Class<?> testClass, String testFileName) throws Exception {
         String[] resourceDirPath = Stream.concat(
                 Stream.of("test", "resources"),
                 Stream.of(testClass.getCanonicalName().split("\\."))

@@ -2,11 +2,11 @@ package org.aybgim.fileassert;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.function.Function;
 
 public class FileAsserters {
+
+    private static final WritingTestFileProcessor WRITING_TEST_FILE_PROCESSOR = new WritingTestFileProcessor();
 
     public static FileAsserter fileAsserter(String fileExtension) {
         return fileAsserter(fileExtension, Assertions::assertEquals);
@@ -16,9 +16,11 @@ public class FileAsserters {
         return fileAsserter(fileExtension, textAssertion, Object::toString);
     }
 
-    public static FileAsserter fileAsserter(String fileExtension, TextAssertion textAssertion, Function<Object, String> stringRepresentation) {
-        return Boolean.getBoolean("fileassert.generate")
-                ? new WritingFileAsserter(fileExtension, stringRepresentation)
-                : new TestingFileAsserter(fileExtension, stringRepresentation, textAssertion);
+    public static FileAsserter fileAsserter(String fileExtension, TextAssertion textAssertion,
+                                            Function<Object, String> stringRepresentation) {
+        TestFileProcessor fileProcessor = Boolean.getBoolean("fileassert.generate")
+                ? WRITING_TEST_FILE_PROCESSOR
+                : new MatchingTestFileProcessor(textAssertion);
+        return new FileAsserter(fileExtension, stringRepresentation, fileProcessor);
     }
 }
