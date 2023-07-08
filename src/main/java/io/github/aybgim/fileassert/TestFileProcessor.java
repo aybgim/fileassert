@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.aybgim.fileassert;
+package io.github.aybgim.fileassert;
 
 abstract class TestFileProcessor {
     protected abstract void processTestFile(String text, Class<?> testClass, String testFileName) throws Exception;

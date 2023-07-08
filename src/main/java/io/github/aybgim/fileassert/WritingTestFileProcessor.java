@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.aybgim.fileassert;
+package io.github.aybgim.fileassert;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

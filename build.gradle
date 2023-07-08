@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'org.aybgim'
+group = 'io.github.aybgim'
 version = '1.0'
 
 repositories {
