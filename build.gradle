@@ -8,6 +8,17 @@ version = '1.0'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://gitlab.example.com/api/v4/groups/<group>/-/packages/maven"
+        name "GitLab"
+        credentials(HttpHeaderCredentials) {
+            name = 'REPLACE_WITH_NAME'
+            value = gitLabPrivateToken
+        }
+        authentication {
+            header(HttpHeaderAuthentication)
+        }
+    }
 }
 
 dependencies {
