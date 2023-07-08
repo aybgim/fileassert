@@ -9,10 +9,10 @@ version = '1.0'
 repositories {
     mavenCentral()
     maven {
-        url "https://gitlab.example.com/api/v4/groups/<group>/-/packages/maven"
+        url "https://gitlab.example.com/api/v4/groups/io.github.aybgim/-/packages/maven"
         name "GitLab"
         credentials(HttpHeaderCredentials) {
-            name = 'REPLACE_WITH_NAME'
+            name = 'aybgim'
             value = gitLabPrivateToken
         }
         authentication {
