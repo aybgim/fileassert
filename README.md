@@ -6,8 +6,8 @@ Generate and maintain these files with no additional code.
 
 Summary
 -------
-Imagine you want to test the string representation of an object. Including literal strings as
-expected values is impractical if it is long, contains multiple lines, or is in a  
+Imagine you want to test the string representation of an object. Including a string literal as
+the expected value in the code is impractical if it is long, contains multiple lines, or is in a  
 format (such as JSON) which is much easier to read and edit in a specialized editor. A better
 alternative is to keep the expected representation in a file somewhere in test/resources. 
 So you can write something like this:
@@ -21,13 +21,13 @@ void testAssertMap(TestInfo info) throws Exception {
 }
 ```
 
-where readFromFile locates and reads the file from resources. This works fine until you
-change the implementation of constructMap and, as a result, the string representation to
+where `readFromFile` locates and reads the file from resources. This works fine until you
+change the implementation of `constructMap` and, as a result, the string representation to
 test. Now you need to change the content of the test file. You can do this manually but 
 the file may be long and contain some fancy formatting. Or you can write special code to
-do this but then you have two pieces of code to maintain.
+do this programmatically, but then you have two pieces of code to maintain.
 
-The fileassert library will solve both problems with only a single line of code. Replace
+The fileassert library will solve both problems with only a coupe of lines of code. Replace
 the above snippet with this:
 
 ```
@@ -41,17 +41,19 @@ void testAssertMap(TestInfo info) throws Exception {
 Depending on the system property "fileassert.generate", this code can behave in two different modes:
 * Testing mode: this is the default mode, when the string representation of the object is 
 matched to the content of a pre-defined file. By default, the matching method is 
-`org.junit.jupiter.api.Assertions::assertEquals` but it can be changed (see below).
-* Writing mode: when "fileassert.generate" is set to "true", the file is created at the pre-defined path, 
-and the string representation of the object is written to the file. This mode is used to create files for
-new tests, or to overwrite them, when the expected string representation changes.
+`Assertions::assertEquals` but it can be replaced (see below).
+* Writing mode: when "fileassert.generate" is set to "true", the file with the
+string representation is created at the pre-defined path (see below). This mode is used to create files for
+new tests, or to overwrite them when the expected string representation changes.
 
 Set the system property "fileassert.generate" to "true" and run the above unit test. It will pass, and
 you will find the file `src/test/resources/org/aybgim/testfileassert/JsonFileAssertTest/testAssertJsonFile.json`
-relative to the repository root. Note that the file is named by the unit test with the extension passed in to
-the factory method `FileAsserts.fileAssert("txt")`; it is located int the resource path of the test class, in
+relative to the repository root. Note that the file is named by the unit test, with the extension passed in to
+the factory method: `FileAsserts.fileAssert("txt")`. It is located in the resource path of the test class, in
 the subfolder named by the class itself. The hierarchy of test file directories exactly mirrors the 
-hierarchy of test classes! Commit the file to source control, and re-run the test without the system property -
+hierarchy of the test classes! 
+
+Commit the file to source control, and re-run the test without the system property -
 it will pass. Keep it as is until the expected string representation changes - then you can simply re-run 
 the test in a writing mode, and commit the changes.
 
@@ -77,6 +79,7 @@ such as JSON. An example is shown below:
 
 ```
 private final Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+
 private final FileAssert jsonFileAssert = FileAsserts.fileAssert(
         "json",
         (expected, actual) -> JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT),
@@ -85,14 +88,15 @@ private final FileAssert jsonFileAssert = FileAsserts.fileAssert(
 
 @Test
 void testAssertJsonFile(TestInfo info) throws Exception {
-    Map<String, String> map = singletonMap("text", "This is text");
+    Map<String, String> map = constructMap();
     jsonFileAssert.assertWithFile(map, info);
 }
 ```
 
 The factory method above is given the third argument of type `Function<Object, String>` which generates
-the string representation of the object. The second argument ensures that the strings are matched as 
-JSON strings rather than raw strings, ignoring extra white space where needed. 
+the string representation of the object - in this case, pretty-printed JSON which is
+nice and easy to read. The second argument ensures that the strings are matched as JSON strings,
+ignoring extra white space where needed. 
 
 QuickStart
 ----------
@@ -105,4 +109,6 @@ And to your repositories:
 maven {
     url = uri("https://maven.pkg.github.com/aybgim/fileassert")
 }
+
+Enjoy your testing!
 ```
