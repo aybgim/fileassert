@@ -102,7 +102,7 @@ QuickStart
 ----------
 Add the following to your gradle dependencies:
 ```
-testImplementation 'org.aybgim:fileassert:1.0'
+testImplementation 'org.aybgim:fileassert:1.0.2'
 ```
 And to your repositories:
 ```

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.aybgim'
-version = '1.0'
+version = '1.0.2'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0'
+            version = '1.0.2'
 
             from components.java
 
@@ -72,7 +72,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '0.1'
+            version = '1.0.2'
 
             from(components.java)
         }
