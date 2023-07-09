@@ -109,6 +109,5 @@ And to your repositories:
 maven {
     url = uri("https://maven.pkg.github.com/aybgim/fileassert")
 }
-
-Enjoy your testing!
 ```
+Enjoy your testing!
