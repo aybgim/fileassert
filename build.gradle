@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'io.github.aybgim'
+group = 'io.gitlab.aybgim'
 version = '1.0'
 
 repositories {
@@ -26,8 +26,36 @@ test {
 
 publishing {
     publications {
-        myLib(MavenPublication) {
+        mavenJava(MavenPublication) {
+            groupId = 'io.gitlab.aybgim'
+            artifactId = 'fileassert'
+            version = '1.0'
+
             from components.java
+
+            pom {
+                name = 'fileassert'
+                description = 'Library for testing serialization formats against resource files, and maintaining these files with no extra code.'
+                url = 'https://gitlab.com/aybgim/fileassert'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'aybgim'
+                        name = 'Albert Gevorgyan'
+                        email = 'john.doe@example.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@gitlab.com:aybgim/fileassert.git'
+                    developerConnection = 'scm:git:ssh@gitlab.com:aybgim/fileassert.git'
+                    url = 'https://gitlab.com/aybgim/fileassert'
+                }
+            }
         }
     }
 }
