@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package io.github.aybgim.fileassert;
+package org.aybgim.fileassert;
 
 import com.google.gson.Gson;
 import org.json.JSONException;

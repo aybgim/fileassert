@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'io.gitlab.aybgim'
+group = 'org.aybgim'
 version = '1.0'
 
 repositories {
@@ -27,7 +27,7 @@ test {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'io.gitlab.aybgim'
+            groupId = 'org.aybgim'
             artifactId = 'fileassert'
             version = '1.0'
 
@@ -53,7 +53,7 @@ publishing {
                 scm {
                     connection = 'scm:git:git@gitlab.com:aybgim/fileassert.git'
                     developerConnection = 'scm:git:ssh@gitlab.com:aybgim/fileassert.git'
-                    url = 'https://gitlab.com/aybgim/fileassert'
+                    url = 'https://gitlab.com/aybgim/fileassert.git'
                 }
             }
         }

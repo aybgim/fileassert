@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package io.github.aybgim.fileassert;
+package org.aybgim.fileassert;
 
 import java.net.URL;
 import java.nio.file.Files;

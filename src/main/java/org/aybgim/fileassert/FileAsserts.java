@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package io.github.aybgim.fileassert;
+package org.aybgim.fileassert;
 
 import org.junit.jupiter.api.Assertions;
 

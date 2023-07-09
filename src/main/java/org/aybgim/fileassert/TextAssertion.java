@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package io.github.aybgim.fileassert;
+package org.aybgim.fileassert;
 
 @FunctionalInterface
 public interface TextAssertion {
