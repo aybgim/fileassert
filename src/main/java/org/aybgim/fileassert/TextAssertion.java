@@ -14,7 +14,20 @@
 
 package org.aybgim.fileassert;
 
+/**
+ * Functional interface with a single method for matching the expected
+ * and actual strings.
+ */
 @FunctionalInterface
 public interface TextAssertion {
+
+    /**
+     * Match the expected and actual strings. The method is used by {@link FileAssert}, and
+     * is expected to throw {@link AssertionError} or a similar error when the test fails.
+     *
+     * @param expected expected string
+     * @param actual actual strings
+     * @throws Exception if the matching operation fails (as opposed to the failure of the test itself).
+     */
     void assertText(String expected, String actual) throws Exception;
 }

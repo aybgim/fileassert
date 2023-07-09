@@ -51,11 +51,48 @@ you will find the file `src/test/resources/org/aybgim/testfileassert/JsonFileAss
 relative to the repository root. Note that the file is named by the unit test with the extension passed in to
 the factory method `FileAsserts.fileAssert("txt")`; it is located int the resource path of the test class, in
 the subfolder named by the class itself. The hierarchy of test file directories exactly mirrors the 
-hierarchy of test classes!
+hierarchy of test classes! Commit the file to source control, and re-run the test without the system property -
+it will pass. Keep it as is until the expected string representation changes - then you can simply re-run 
+the test in a writing mode, and commit the changes.
 
+What if your test file is not expected to exactly match the string representation? For example, it may contain
+spaces or new lines for improved readability, but you want to ignore them while matching. You can do this by
+providing the second argument to the factory method:
 
+```
+@Test
+void testAssertMap(TestInfo info) throws Exception {
+    Map<String, String> map = constructMap();
+    FileAssert textAssert = FileAsserts.fileAssert("txt",
+            (expected, actual) -> assertThat(actual, equalToCompressingWhiteSpace(expected)));
+    textAssert.assertWithFile(map, info);
+}
+```
+This argument is of type `TextAssertion` (see the documentation). In this case, it takes the expected and
+actual strings, and compares them compressing white space.
 
+By default, the string representation of the object in question is obtained by simply calling
+`Object::toString()`. However, in most cases you would like to test alternative serialization formats, 
+such as JSON. An example is shown below:
 
+```
+private final Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+private final FileAssert jsonFileAssert = FileAsserts.fileAssert(
+        "json",
+        (expected, actual) -> JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT),
+        gson::toJson
+);
+
+@Test
+void testAssertJsonFile(TestInfo info) throws Exception {
+    Map<String, String> map = singletonMap("text", "This is text");
+    jsonFileAssert.assertWithFile(map, info);
+}
+```
+
+The factory method above is given the third argument of type `Function<Object, String>` which generates
+the string representation of the object. The second argument ensures that the strings are matched as 
+JSON strings rather than raw strings, ignoring extra white space where needed. 
 
 QuickStart
 ----------
