@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.aybgim'
-version = '1.0.4'
+version = '1.0.5'
 
 repositories {
     mavenCentral()
@@ -30,7 +30,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0.4'
+            version = '1.0.5'
 
             from components.java
 
@@ -66,6 +66,17 @@ publishing {
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+        maven {
+            name "GitLab"
+            url "https://gitlab.com/api/v4/projects/47505299/packages/maven"
+            credentials(HttpHeaderCredentials) {
+                name = 'Private-Token'
+                value = gitLabPrivateToken
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
             }
         }
     }
