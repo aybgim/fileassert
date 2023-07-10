@@ -1,13 +1,20 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
+    id "signing"
 }
 
 group = 'org.aybgim'
-version = '1.0.5'
+version = '1.0.6'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 dependencies {
@@ -30,7 +37,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0.5'
+            version = '1.0.6'
 
             from components.java
 
@@ -64,8 +71,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/aybgim/fileassert")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
             }
         }
         maven {
@@ -80,4 +87,22 @@ publishing {
             }
         }
     }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = project.findProperty("sonatype.user")
+            password = project.findProperty("sonatype.user")
+        }
+    }
+}
+
+signing {
+    def signingKey = providers.environmentVariable("GPG_SIGNING_KEY")
+    def signingPassphrase = providers.environmentVariable("GPG_SIGNING_PASSPHRASE")
+    useInMemoryPgpKeys(signingKey.get(), signingPassphrase.get())
+    sign configurations.archives
 }

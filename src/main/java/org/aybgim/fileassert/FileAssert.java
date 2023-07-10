@@ -29,7 +29,7 @@ import java.util.function.Function;
  * {testClassName} is the name of the test class,
  * {testName} is the name of the unit test, and {ext} is a pre-defined file extension.
  * <br>
- * For example, for the unit test method {@link org.aybgim.fileassert.FileAssertTest#testAssertTextFile}, and
+ * For example, for the unit test method {@code org.aybgim.fileassert.FileAssertTest#testAssertTextFile}, and
  * the fileExtension ".txt", the path should be
  * {@code src/test/resources/org/aybgim/fileassert/FileAssertTest/testAssertTextFile.txt}
  * </p>
@@ -59,7 +59,7 @@ public class FileAssert {
     }
 
     /**
-     * <p>Depending on the implementation, this method may behave in two different modes:
+     * Depending on the implementation, this method may behave in two different modes:
      * <ul>
      *     <li>Testing mode: this is the default mode, when the string representation of the object is matched to
      *     the content of the file. The matching method and the behaviour following mismatch depend on the
@@ -68,10 +68,10 @@ public class FileAssert {
      *     string representation of the object is written to the file. This mode is used to create files for
      *     new tests, or to overwrite them, when the expected string representation changes.</li>
      * </ul>
-     * </p>
+     *
      * @param actual object whose string representation is tested
      * @param info test information used to obtain test class and test method name.
-     * @throws Exception
+     * @throws Exception if assertion operation fails (as opposed to failed assertion)
      */
     public void assertWithFile(Object actual, TestInfo info) throws Exception {
         Class<?> testClass = info.getTestClass()
