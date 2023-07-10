@@ -108,6 +108,11 @@ And to your repositories:
 ```
 maven {
     url = uri("https://maven.pkg.github.com/aybgim/fileassert")
+    credentials {
+        username = "aybgim-package"
+        // Read-only access token to a public registry so can be cleartext:
+        password = "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"
+    }
 }
 ```
 Enjoy your testing!
