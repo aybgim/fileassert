@@ -98,3 +98,4 @@ the string representation of the object - in this case, pretty-printed JSON whic
 nice and easy to read. The second argument ensures that the strings are matched as JSON strings,
 ignoring extra white space where needed. 
 
+The jar is currently available at https://github.com/aybgim/fileassert/packages/1897203
