@@ -98,21 +98,3 @@ the string representation of the object - in this case, pretty-printed JSON whic
 nice and easy to read. The second argument ensures that the strings are matched as JSON strings,
 ignoring extra white space where needed. 
 
-QuickStart
-----------
-Add the following to your gradle dependencies:
-```
-testImplementation 'org.aybgim:fileassert:1.0.2'
-```
-And to your repositories:
-```
-maven {
-    url = uri("https://maven.pkg.github.com/aybgim/fileassert")
-    credentials {
-        username = "aybgim-package"
-        // Read-only access token to a public registry so can be cleartext:
-        password = "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"
-    }
-}
-```
-Enjoy your testing!
