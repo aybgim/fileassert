@@ -4,17 +4,18 @@ plugins {
 }
 
 group = 'org.aybgim'
-version = '1.0.2'
+version = '1.0.4'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // The actual library depends on junit 5
-    implementation platform('org.junit:junit-bom:5.9.1')
-    implementation 'org.junit.jupiter:junit-jupiter'
+    // The actual library depends on junit 5 API
+    implementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.3'
 
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.3'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.9.3'
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.1'
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
     testImplementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
@@ -29,7 +30,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0.2'
+            version = '1.0.4'
 
             from components.java
 
@@ -66,15 +67,6 @@ publishing {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
             }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            groupId = 'org.aybgim'
-            artifactId = 'fileassert'
-            version = '1.0.2'
-
-            from(components.java)
         }
     }
 }
