@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'org.aybgim'
-version = '1.0.7'
+version = '1.0.8'
 
 repositories {
     mavenCentral()
@@ -37,7 +37,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0.7'
+            version = '1.0.8'
 
             from components.java
 
@@ -95,7 +95,7 @@ nexusPublishing {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
             username = project.findProperty("sonatype.user")
-            password = project.findProperty("sonatype.user")
+            password = project.findProperty("sonatype.key")
         }
     }
 }
