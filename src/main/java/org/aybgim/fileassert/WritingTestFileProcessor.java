@@ -15,9 +15,7 @@
 package org.aybgim.fileassert;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.stream.Stream;
 
 class WritingTestFileProcessor extends TestFileProcessor {
@@ -30,6 +28,6 @@ class WritingTestFileProcessor extends TestFileProcessor {
         Path srcDirPath = Paths.get("src", resourceDirPath);
         Files.createDirectories(srcDirPath);
         Path testFilePath = srcDirPath.resolve(testFileName);
-        Files.writeString(testFilePath, text, StandardCharsets.UTF_8);
+        Files.write(testFilePath, text.getBytes());
     }
 }

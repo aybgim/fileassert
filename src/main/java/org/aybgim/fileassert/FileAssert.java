@@ -75,9 +75,9 @@ public class FileAssert {
      */
     public void assertWithFile(Object actual, TestInfo info) throws Exception {
         Class<?> testClass = info.getTestClass()
-                .orElseThrow();
+                .orElseThrow(RuntimeException::new);
         String testName = info.getTestMethod()
-                .orElseThrow()
+                .orElseThrow(RuntimeException::new)
                 .getName();
         String testFileName = testName + "." + fileExtension;
         String text = stringRepresentation.apply(actual);
