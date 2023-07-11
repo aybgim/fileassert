@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'org.aybgim'
-version = '1.0.8'
+version = '1.0.9'
 
 repositories {
     mavenCentral()
@@ -37,7 +37,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'org.aybgim'
             artifactId = 'fileassert'
-            version = '1.0.8'
+            version = '1.0.9'
 
             from components.java
 
@@ -55,7 +55,7 @@ publishing {
                     developer {
                         id = 'aybgim'
                         name = 'Albert Gevorgyan'
-                        email = 'john.doe@example.com'
+                        email = 'ablertus@yahoo.com'
                     }
                 }
                 scm {
